@@ -1,6 +1,7 @@
 import 'package:fitness/common/Color/color.dart';
 import 'package:fitness/common_widget/on_boarding_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:fitness/view/login/signUp_view.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({super.key});
@@ -17,19 +18,10 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   void initState() {
     super.initState();
     controller.addListener(() {
-      selectedPage = controller.page?.round() ?? 0;
-      setState(() {});
-    });
-  }
-
-  int currentStep = 0;
-
-  void nextStep() {
-    if (currentStep < 3) {
       setState(() {
-        currentStep++;
+        selectedPage = controller.page?.round() ?? 0;
       });
-    }
+    });
   }
 
   List pageArr = [
@@ -58,6 +50,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,6 +58,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       body: Stack(
         alignment: Alignment.bottomRight,
         children: [
+          // PageView
           PageView.builder(
             controller: controller,
             itemCount: pageArr.length,
@@ -74,31 +68,33 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             },
           ),
 
+          // Progress + Button
           SizedBox(
             width: double.infinity,
             height: 150,
             child: Stack(
               alignment: Alignment.center,
               children: [
+                // Progress Bar
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(4, (index) {
+                  children: List.generate(pageArr.length, (index) {
                     return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8),
-                      width: 30,
+                      margin: const EdgeInsets.symmetric(horizontal: 8),
+                      width: 20,
                       height: 10,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
-
+                        borderRadius: BorderRadius.circular(100),
                         color:
-                            index <= currentStep
+                            index == selectedPage
                                 ? Tcolor.onboardColor
-                                : Colors.grey, // inactive dot
+                                : Colors.grey,
                       ),
                     );
                   }),
                 ),
 
+                // Next Button
                 Align(
                   alignment: Alignment.centerRight,
                   child: Container(
@@ -112,18 +108,24 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                       borderRadius: BorderRadius.circular(100),
                     ),
                     child: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.navigate_next,
                         size: 40,
                         color: Colors.white,
                       ),
                       onPressed: () {
-                        if (selectedPage < 3) {
-                          selectedPage = selectedPage + 1;
-                          controller.jumpToPage(selectedPage);
-                          nextStep();
+                        if (selectedPage < pageArr.length - 1) {
+                          controller.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
                         } else {
-                          return;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignupView(),
+                            ),
+                          );
                         }
                       },
                     ),

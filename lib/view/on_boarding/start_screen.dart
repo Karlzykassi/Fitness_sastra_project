@@ -1,3 +1,5 @@
+// import 'package:fitness/common_widget/on_boarding_widget.dart';
+import 'package:fitness/view/on_boarding/on_boarding_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness/common/Color/color.dart';
 
@@ -38,7 +40,14 @@ class _StartScreenState extends State<StartScreen> {
                 height: 50,
                 width: media.width * 0.7,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const OnBoardingView(),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(),
                   child: Text(
                     "Start",
