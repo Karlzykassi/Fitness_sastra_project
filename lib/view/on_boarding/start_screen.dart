@@ -22,7 +22,7 @@ class _StartScreenState extends State<StartScreen> {
           Expanded(
             child: Center(
               child: Text(
-                "Fitness",
+                "Fitness X",
                 style: TextStyle(
                   color: Tcolor.secondaryColor,
                   fontSize: 38,

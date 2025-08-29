@@ -1,4 +1,6 @@
+// import 'package:fitness/common/Color/color.dart';
 import 'package:fitness/common/Color/color.dart';
+import 'package:fitness/common_widget/textField_widget.dart';
 import 'package:flutter/material.dart';
 
 class SignupView extends StatefulWidget {
@@ -11,7 +13,7 @@ class SignupView extends StatefulWidget {
 class _SignupViewState extends State<SignupView> {
   @override
   Widget build(BuildContext context) {
-    MediaQueryData media = MediaQuery.of(context);
+    var media = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -22,7 +24,7 @@ class _SignupViewState extends State<SignupView> {
             children: [
               Image.asset(
                 "assets/img/Untitled-1.jpg",
-                width: media.size.width,
+                width: media.width,
                 fit: BoxFit.fitHeight,
               ),
               const SizedBox(height: 20),
@@ -34,6 +36,11 @@ class _SignupViewState extends State<SignupView> {
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.none,
                 ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                // padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: TextfieldWidget(),
               ),
             ],
           ),
